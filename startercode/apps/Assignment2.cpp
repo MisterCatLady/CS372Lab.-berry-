@@ -1,18 +1,129 @@
 //lberry4@my.athens.edu
 //Assignment02.cpp
-//Purpose: Hi this is essentially a blank solution currently. 
-//I have a handful of excuses but I understand if my earned credit is affected.
-//If this message does not change, know that I am more disappointed in myself than you could ever be.
+//This is still incomplete but I think I made a breakthrough today. 
 
 #include <vector>
 #include <iostream>
+#include <chrono>
+
+using namespace std;
+using namespace std::chrono;
 //Question 1: Creating a Vector
 // Write a program that uses your Vector class and the chrono library to determine the size of the problem. 
 // Add progressively larger numbers of integers to an instance of your vector class 
-// increasing in size by powers of two (2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096, …). 
+// increasing in size by powers of two (2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096, â€¦). 
 // Time, in milliseconds, how long it takes to add these elements to the underlying dynamic array 
 // that is keeping the data inside the object (following the pattern we used to time the Towers of Hanoi).
+template <typename T>
+class Vector
+{
+public:
+	Vector()
+	{
+		arr new T[1];
+		vCapacity = 1;
+		length = 0;
+	}
+	~Vector()
+	{
+		delete[] arr;
+		arr = nullptr;
+	}
+	//copy constructor
+	Vector(Vector& obj)
+	{
+		this->arr = new T[obj.capacity()];
+		for (int i = 0; i < obj.size(); i++) { this->put(i, obj.at(i)); }
+	}
+	//assignment operator
+	bool operator==(Vector& other) const
+	{
+		if (other.size() != length) { return false; }
+		else 
+		{
+			for (int i = 0; i < length; i++)
+			{
+				if (arr[i] != other.get(i))
+				{
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+	T& operator[](int i)
+	{
+		if ((i < 0) || (i >= length))
+		{
+			std::cerr << std::endl << "Vector index out of bounds" << std::endl;
+		}
+		return at(i);
+	}
+	Vector& operator=(const Vector& source)
+	{
+		if (this == &source) { return *this; }
+		delete[] arr;
+		arr = newT[1];
+		vCapacity = 1;
+		length = 1;
+		for (int i = 0; i < source.size(); i++) { push_back(source.at(i)); }
+		return *this;
+	}
+	void push_back()
+	{
+		if (length == vCapacity) { expand(2 * vCapacity); }
+		arr[length] = data;
+		length++;
+	}
+	void vector::put(T data, int pos)
+	{
+		if (index == vCapacity) { push_back(T data); }
+		else { arr[index] = data; }
+	}
+	void traverse()
+	{
+		for (int i = 0; i < length; i++) { cout << arr[i] << endl; }
+		cout << endl;
+	}
+	T& at(int index)
+	{
+		if (index < 0 || index > length)
+		{
+			std::cerr << "Vector: index out of bounds on access" << std::endl;
+			exit(1);
+		}
+		else { return arr[index]; }
+	}
+	int size()
+	{
+		return length;
+	}
+	int capacity()
+	{
+		return vCapacity;
+	}
 
+private:
+	T* arr = new T[1];
+	int vCapacity = 1;
+	int length = 0;
+
+	void expand(int newCapacity)
+	{
+		if (newCapacity > vCapacity)
+		{
+			T* temp = new T[newCapacity];
+			for (int i = 0; i < length; i++) { temp[i] = arr[i]; }
+			delete[] arr;
+			vCapacity = newCapacity;
+			arr = temp;
+		}
+		else
+		{
+			std::cerr << "vector::expand: new capacity is less than equal to current\n";
+		}
+	}
+};
 //Then try the following by defining subclasses of Vector that use polymorphism to override the capacity method
 // of the base class.In the first case, replace the for - loop with a call to the STL copy algorithm.
 // In the second case, override the capacity method with a new version that starts the doubling process with 
@@ -21,6 +132,25 @@
 
 //HINT: If you take advantage of polymorphism correctly, you will not have to make any major changes in your 
 // timing program to use the derived classes.
+class VecTester
+{
+private:
+	Vector<int> testVector;
+	void fillVector(size_t cap)
+	{
+		for (int i = 0; i < cap; ++i) { testVector[i]; }
+	}
+public:
+	size_t oldCap = testVector.capacity();
+};
+
+int main()
+{
+
+	return 0;
+
+}
+
 
 //Question 2: A better array
 //The STL provides an Array template class that is just a wrapper around the base C++ array data type. Why? 
@@ -43,5 +173,6 @@
 
 //(HINTS: (1) think about using parallel arrays or vectors, 
 //		(2) you will need to determine what to do when you pull something from the bag, 
-//		(3) This needs to be a separate class than the existing Bag class, don’t modify the existing class to do this,
-//		(4) You can do this with a dictionary object like the STL map class, but let’s assume you don’t have that available.)
+//		(3) This needs to be a separate class than the existing Bag class, donâ€™t modify the existing class to do this,
+//		(4) You can do this with a dictionary object like the STL map class, but letâ€™s assume you donâ€™t have that available.)
+//recursive function initialization
