@@ -11,6 +11,8 @@ public:
 
 	bool empty() { return queueList.empty(); }
 	void push(T data) { queueList.push_front(data); }
-	T front();
+	T front() { return queueList.front(); }
+	T back() { return queueList.back(); }
+	void pop() { queueList.pop_back(); }
 };
 

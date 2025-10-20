@@ -1,7 +1,10 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\startercode",
+    "\\startercode\\apps",
+    "\\startercode\\include"
   ],
-  "SelectedNode": "\\Lecture1014.sln",
+  "SelectedNode": "\\startercode\\include\\Stack.h",
   "PreviewInSolutionExplorer": false
 }
