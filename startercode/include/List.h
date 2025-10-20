@@ -9,9 +9,28 @@ private:
 		public T data;
 		Node* prev;
 		Node* next;
+		bool isHiddenNode = false;
 	};
-	Node* head = nullptr;
-	Node* tail = nullptr;
+	Node* head;
+	Node* tail;
+
+	void setupList()
+	{
+		Node* newNode = new Node();
+		head = newNode;
+		tail = newNode;
+	}
+	void deleteListContents()
+	{
+		Node* current = head;
+		Node* temp = nullptr;
+		while (current != nullptr)
+		{
+			temp = current.next;
+			delete current;
+			current = temp;
+		}
+	}
 public:
 	List()		//default constructor
 	{
@@ -32,23 +51,6 @@ public:
 	~List()		//destructor
 	{
 		deleteListContents();
-	}
-	void setupList()
-	{
-		Node* newNode = new Node();
-		head = newNode;
-		tail = newNode;
-	}
-	void deleteListContents()
-	{
-		Node* current = head;
-		Node* temp = nullptr;
-		while (current != nullptr)
-		{
-			temp = current.next;
-			delete current;
-			current = temp;
-		}
 	}
 	bool empty();
 	void push_front(T data)
