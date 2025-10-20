@@ -17,6 +17,8 @@ private:
 	void setupList()
 	{
 		Node* newNode = new Node();
+		newNode->next = nullptr;
+		newNode->prev = nullptr;
 		head = newNode;
 		tail = newNode;
 	}
