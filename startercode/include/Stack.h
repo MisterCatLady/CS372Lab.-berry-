@@ -11,6 +11,7 @@ public:
 
 	bool empty() { return stackList.empty(); }
 	void push(T data) { stackList.push_front(data); }
+	void pop() { return stackList.pop_front(); }
 	T front() { return stackList.front(); }
 	T back() { return stackList.back(); }
 	
