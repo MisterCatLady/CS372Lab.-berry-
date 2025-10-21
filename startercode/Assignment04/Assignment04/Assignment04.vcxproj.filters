@@ -23,10 +23,10 @@
     <ClInclude Include="..\..\apps\Assignment04\List.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\Queue.h">
+    <ClInclude Include="..\..\include\Stack.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\Stack.h">
+    <ClInclude Include="..\..\include\Queue.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

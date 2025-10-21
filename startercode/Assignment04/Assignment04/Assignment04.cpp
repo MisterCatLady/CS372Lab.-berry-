@@ -1,8 +1,8 @@
 #include <iostream>
 using namespace std;
 //Add the Stack and Queue classes to your class library, using the code presented in lecture.
-#include "Stack.h"
-#include "Queue.h"
+#include "C:\Users\Lindsey\Desktop\CS318\CS372Lab.-berry-\startercode\include\Stack.h"
+#include "C:\Users\Lindsey\Desktop\CS318\CS372Lab.-berry-\startercode\include\Queue.h"
 // The Josephus problem is the following game: N people,  numbered 1 to N, are sitting in a circle. 
 // Starting at person 1, a hot  potato is passed. After M passes, the person holding the hot potato  
 // is eliminated, the circle closes ranks, and the game continues with  the person who was sitting 
