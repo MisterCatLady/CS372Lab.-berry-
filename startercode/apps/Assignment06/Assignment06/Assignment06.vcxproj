@@ -123,6 +123,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\include\Tree.hpp" />
     <ClInclude Include="Dictionary.h" />
     <ClInclude Include="Pair.h" />
   </ItemGroup>

@@ -10,8 +10,8 @@
 template <typename Key, typename Value>
 struct Pair
 {
-	Key first;
-	Value second;
+	Key key;
+	Value val;
 
 	auto operator<=>(const Pair&) const = default;
 };

@@ -42,10 +42,41 @@ private:
 
     int randomLevel();
 public:
-    Dictionary(int maxLvl = 16, float prob = 0.5):
-        maxLevel(maxLvl), probability(prob), level(1), 
-        head(std::make_shared<Node>(-1, maxLvl)), 
-        gen(rd()), distribution(0.0,1.0) { }
+    //Rule of 5
+    Dictionary() : root(nullptr), count(0) {}
+    ~Dictionary() { clear(); }
+
+    Dictionary(const Dictionary& other) : root(nullptr), count(0) {
+        for (const auto& k : other.keys())
+            insert(k, other.at(k));
+    }
+
+    Dictionary(Dictionary&& other) noexcept
+        : root(other.root), count(other.count) {
+        other.root = nullptr;
+        other.count = 0;
+    }
+
+    Dictionary& operator=(const Dictionary& other) {
+        if (this != &other) {
+            clear();
+            for (const auto& k : other.keys())
+                insert(k, other.at(k));
+        }
+        return *this;
+    }
+
+    Dictionary& operator=(Dictionary&& other) noexcept {
+        if (this != &other) {
+            clear();
+            root = other.root;
+            count = other.count;
+            other.root = nullptr;
+            other.count = 0;
+        }
+        return *this;
+    }
+
     void insert(Comparable key)
     {
         std::vector<std::shared_ptr<Node>> update(maxLevel, nullptr);
