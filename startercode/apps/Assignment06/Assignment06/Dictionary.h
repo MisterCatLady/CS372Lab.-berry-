@@ -5,14 +5,19 @@
 //Step 2 A Dictionary Class
 //Now use your Pair class to construct a template class Dictionary<Key,Value> that stores its data in a tree of Pair<Key,Value> objects.
 #include "Pair.h"
-//compiler doesn't like this for some reason
-#include "C:\Users\Lindsey\Desktop\CS318\CS372Lab.-berry-\startercode\include\Tree.hpp"
+//compiler doesn't like file name for some reason
+#include "C:/Users/Lindsey/Desktop/CS318/CS372Lab.-berry-/startercode/include/Tree.hpp"
 template <typename Key, typename Value>
 class Dictionary 
 {
 private:
     using PairType = Pair<Key, Value>;
     Tree<PairType> tree;
+
+    static bool keyCompare(const PairType& a, const PairType& b)
+    {
+        return a.pairKey < b.pairKey;
+    }
 public:
     //Rule of 5
     Dictionary() = default;
@@ -47,7 +52,7 @@ public:
         tree = tree.insert(newPair, keyCompare);
     }
     //at() : Access an element by key, with an error if the key isn’t in the dictionary.
-    Value& at(const Key& key) 
+    Value at(const Key& key) 
     {
         PairType searchPair{ key, Value{} };
         Tree<PairType> subtree;
@@ -63,7 +68,7 @@ public:
 
        
         tree.inorder([&](const PairType& p) {
-            if (p.first != key)
+            if (p.pairKey != key)
                 remaining.push_back(p);
             });
 
@@ -99,6 +104,6 @@ public:
     //	isEmpty() : return true if the Dictionary is empty, false otherwise.
     bool isEmpty() const { return tree.isEmpty(); }
     //	size() : return the number of key - value pairs in the dictionary.
-    size_t size() const { return tree.size; }
+    size_t size() const { return tree.size(); }
 };
 

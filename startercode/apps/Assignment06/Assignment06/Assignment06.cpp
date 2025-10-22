@@ -1,6 +1,6 @@
 #include <iostream>
 #include "Dictionary.h"
-//Chat gpt helped me to write these tests
+//Chat gpt helped write these tests
 int main() {
     Dictionary<std::string, int> dict;
     //test insert()
