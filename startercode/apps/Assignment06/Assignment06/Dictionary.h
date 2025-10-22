@@ -6,7 +6,8 @@
 //Now use your Pair class to construct a template class Dictionary<Key,Value> that stores its data in a tree of Pair<Key,Value> objects.
 #include "Pair.h"
 //compiler doesn't like file name for some reason
-#include "C:/Users/Lindsey/Desktop/CS318/CS372Lab.-berry-/startercode/include/Tree.hpp"
+//#include "C:/Users/Lindsey/Desktop/CS318/CS372Lab.-berry-/startercode/include/Tree.hpp"
+#include "Tree.hpp"
 template <typename Key, typename Value>
 class Dictionary 
 {
