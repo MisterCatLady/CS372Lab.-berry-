@@ -1,144 +1,104 @@
 #pragma once
-#include <vector>
+#include <list>
 #include <stdexcept>
+#include <functional>
 //Step 2 A Dictionary Class
 //Now use your Pair class to construct a template class Dictionary<Key,Value> that stores its data in a tree of Pair<Key,Value> objects.
 #include "Pair.h"
+//compiler doesn't like this for some reason
 #include "C:\Users\Lindsey\Desktop\CS318\CS372Lab.-berry-\startercode\include\Tree.hpp"
-//clear() : Remove all elements from the dictionary.
-//Lookup operations
-//keys() : Return a reference to a List<Key> of the keys in the dictionary.
-//values() : Return a reference to a List<Value> of the values in the dictionary.
-//Capacity and Size :
-//	isEmpty() : return true if the Dictionary is empty, false otherwise.
-//	size() : return the number of key - value pairs in the dictionary.
 template <typename Key, typename Value>
-//Tree of Pairs
 class Dictionary 
 {
 private:
-    struct Node 
-    {
-        Pair<Key, Value> data;
-        std::unique_ptr<Node> left;
-        std::unique_ptr<Node> right;
-
-        Node(const Key& k, const Value& v) : data{ k, v } {}
-    };
-    std::unique_ptr<Node> root;
-    size_t count = 0;
-
-
-    void insertNode(std::unique_ptr<Node>& node, const Key& key, const Value& value) 
-    {
-        if (!node) 
-        {
-            node = std::make_unique<Node>(key, value);
-            ++count;
-            return;
-        }
-        if (key < node->data.pairKey)
-            insertNode(node->left, key, value);
-        else if (key > node->data.pairKey)
-            insertNode(node->right, key, value);
-        else
-            node->data.second = value; // replace existing
-    }
-
-    std::unique_ptr<Node> eraseNode(std::unique_ptr<Node> node, const Key& key) 
-    {
-        if (!node) return nullptr;
-
-        if (key < node->data.pairKey)
-            node->left = eraseNode(std::move(node->left), key);
-        else if (key > node->data.pairKey)
-            node->right = eraseNode(std::move(node->right), key);
-        else {
-            // Node to delete found
-            if (!node->left)
-                return std::move(node->right);
-            else if (!node->right)
-                return std::move(node->left);
-
-            // Node with two children: find inorder successor
-            Node* successor = node->right.get();
-            while (successor->left)
-                successor = successor->left.get();
-
-            node->data = successor->data;
-            node->right = eraseNode(std::move(node->right), successor->data.pairKey);
-        }
-        return node;
-    }
+    using PairType = Pair<Key, Value>;
+    Tree<PairType> tree;
 public:
     //Rule of 5
-    Dictionary() : root(nullptr), count(0) {}
-    ~Dictionary() { clear(); }
+    Dictionary() = default;
+    ~Dictionary() = default;
+    Dictionary(const Dictionary&) = default;
+    Dictionary(Dictionary&&) noexcept = default;
+    Dictionary& operator=(const Dictionary&) = default;
+    Dictionary& operator=(Dictionary&&) noexcept = default;
 
-    Dictionary(const Dictionary& other) : root(nullptr), count(0) 
-    {
-        for (const auto& k : other.keys())
-            insert(k, other.at(k));
-    }
-
-    Dictionary(Dictionary&& other) noexcept
-        : root(other.root), count(other.count) {
-        other.root = nullptr;
-        other.count = 0;
-    }
-
-    Dictionary& operator=(const Dictionary& other) {
-        if (this != &other) {
-            clear();
-            for (const auto& k : other.keys())
-                insert(k, other.at(k));
-        }
-        return *this;
-    }
-
-    Dictionary& operator=(Dictionary&& other) noexcept {
-        if (this != &other) {
-            clear();
-            root = other.root;
-            count = other.count;
-            other.root = nullptr;
-            other.count = 0;
-        }
-        return *this;
-    }
     //The following access and modification methods:
-//operator[]() : 
+    //operator[]() : 
     Value& operator[](const Key& key) 
     {
         //Access or insert an element by key
-        Node* found = findNode(root.get(), key);
-        if (found) { return found->data.pairVal; }
-        //if the key doesn’t exist, then 
-        //insert a new pair into the dictionary with that value.
-        insert(key, Value{});
-        return findNode(root.get(), key)->data.pairVal;
+        PairType searchPair{ key, Value{} };
+        Tree<PairType> subtree;
+
+        if (!tree.find(searchPair, subtree, keyCompare)) {
+            // Insert new key with default value
+            tree = tree.insert(searchPair, keyCompare);
+        }
+
+        // Now find again to retrieve the current value
+        tree.find(searchPair, subtree, keyCompare);
+        PairType p = subtree.root();
+        return p.pairVal;
     }
     //insert() : Insert a new value pair into the dictionary.
     void insert(const Key& key, const Value& value) 
     {
-        insertNode(root, key, value);
+        PairType newPair{ key, value };
+        tree = tree.insert(newPair, keyCompare);
     }
     //at() : Access an element by key, with an error if the key isn’t in the dictionary.
     Value& at(const Key& key) 
     {
-        Node* found = findNode(root.get(), key);
-        if (!found)
+        PairType searchPair{ key, Value{} };
+        Tree<PairType> subtree;
+        if (!tree.find(searchPair, subtree, keyCompare)) {
             throw std::out_of_range("Key not found in dictionary");
-        return found->data.pairVal;
+        }
+        return subtree.root().pairVal;
     }
     //erase() : Remove the key - value pair from the dictionary as indicated by the key.
     void erase(const Key& key) 
     {
-        root = eraseNode(std::move(root), key);
-        --count;
+        std::list<PairType> remaining;
+
+       
+        tree.inorder([&](const PairType& p) {
+            if (p.first != key)
+                remaining.push_back(p);
+            });
+
+        // Rebuild the tree from remaining elements
+        Tree<PairType> newTree;
+        for (const auto& p : remaining) {
+            newTree = newTree.insert(p, keyCompare);
+        }
+
+        tree = newTree;  // Replace old tree with new one
     }
-    bool search(Comparable key) const;
-  
-    void print() const;
+    //clear() : Remove all elements from the dictionary.
+    void clear() 
+    {
+        tree = Tree<PairType>();
+    }
+//Lookup operations
+//keys() : Return a reference to a List<Key> of the keys in the dictionary.
+    std::list<Key> keys() const 
+    {
+        std::list<Key> klist;
+        tree.inorder([&klist](const PairType& p) { klist.push_back(p.pairKey); });
+        return klist;
+    }
+//values() : Return a reference to a List<Value> of the values in the dictionary.
+    std::list<Value> values() const 
+    {
+        std::list<Value> vlist;
+        tree.inorder([&vlist](const PairType& p) { vlist.push_back(p.pairVal); });
+        return vlist;
+    }
+    //Capacity and Size :
+    //	isEmpty() : return true if the Dictionary is empty, false otherwise.
+    bool isEmpty() const { return tree.isEmpty(); }
+    //	size() : return the number of key - value pairs in the dictionary.
+    size_t size() const { return tree.size; }
 };
 
