@@ -15,12 +15,11 @@ class Bag
 {
 private:
 	List<Thing> bagContents;
-	
-	int bagSize;
+	int bagSize = 0;
 public:
 	Bag() = default; // default constructor
 	Bag(const Bag<Thing>& rhs): bagContents(rhs.bagContents) {} // copy constructor
-	Bag<Thing>& operator=(cosnt Bag<Thing>& rhs) //copy assign operator
+	Bag<Thing>& operator=(const Bag<Thing>& rhs) //copy assign operator
 	{
 		if (this != &rhs) { bagContents = rhs.bagContents; }
 		return *this;
@@ -34,7 +33,7 @@ public:
 	void insert(Thing aThing)
 	{
 		bagContents.push_back(aThing);
-		bagSize++;
+		++bagSize;
 	}
 	Thing& pop()
 	{
@@ -42,7 +41,7 @@ public:
 		if (bagContents.size() > 0)
 		{
 			aThing = bagContents[bagSize];
-			bagSize--;
+			--bagSize;
 		}
 		else
 		{
@@ -54,10 +53,22 @@ public:
 	int count(Thing aThing)
 	{
 		int bagCount = 0;
-		for (int i = 0; i < bagSize; i++) { bagCount++; }
+		for (auto it = bagContents.cbegin(); it != bagContents.cend(); ++it)
+		{
+			if (*it == aThing)
+				++bagCount;
+		}
 		return bagCount;
 	}
-
+	void printBag() const
+	{
+		std::cout << "{ ";
+		for (auto it = bagContents.cbegin(); it != bagContents.cend(); ++it)
+		{
+			std::cout << *it << " ";
+		}
+		std::cout << "}" << std::endl;
+	}
 };
 
 //We need a “circular list”, where such a thing differs from a regular 
