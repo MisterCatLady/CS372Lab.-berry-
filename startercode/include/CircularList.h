@@ -1,15 +1,5 @@
-
-//We need a “circular list”, where such a thing differs from a regular 
-// list in that attempts to traverse the list will return you back to the front of the list and continue. 
-//This can be built by inheriting from your existing list class.
-
-//You’ll need a starting point in the list (an additional parameter to the traverse) and then the traverse will stop when you get back to the starting point. 
-//Your submission will need to document how you interpret the different requirements, document what you need to override + what needs to change (if anything) 
-//in the base class in your design, and provide the new class and test code for your work.
-    
- //
 // File:   CicrularList.h
-// Author: Adam Lewis
+// Author: Dr Adam Lewis
 // Purpose:
 // Build a cicuular list using the classic double linked version of a linked list.
 //
