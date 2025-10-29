@@ -1,11 +1,11 @@
-// File:   avltree.hpp
-// Author: Dr Adam Lewis - edited by Lindsey Berry
-// Purpose:
-//Grab the AVL tree class from Your Glorious Instructor’s GitHub repo and add it into your repository.
-#pragma once
-#include <iostream>
-#include <algorithm>
-
+//// File:   avltree.hpp
+//// Author: Dr Adam Lewis - edited by Lindsey Berry
+//// Purpose:
+////Grab the AVL tree class from Your Glorious Instructor’s GitHub repo and add it into your repository.
+//#pragma once
+//#include <iostream>
+//#include <algorithm>
+//
 template <typename T>
 class AVLTree {
 private:
@@ -15,9 +15,9 @@ private:
         AVLNode* left;
         AVLNode* right;
         int height;
-        AVLNode(int val) : key(val), left(nullptr), right(nullptr), height(1) {}
+        AVLNode(T val) : key(val), left(nullptr), right(nullptr), height(1) {}
     };
-    AVLNode* root;
+    AVLNode* root=nullptr;
 
     // Get height of a node
     int height(AVLNode* node) {
@@ -62,7 +62,7 @@ private:
     }
 
     // Insert a node in AVL tree
-    AVLNode* insert(AVLNode* node, int key) {
+    AVLNode* insert(AVLNode* node, T key) {
         if (node == nullptr) return new AVLNode(key);
 
         if (key < node->key)
@@ -111,7 +111,7 @@ private:
     }
 
     // Delete a node
-    AVLNode* deleteNode(AVLNode* root, int key) {
+    AVLNode* deleteNode(AVLNode* root, T key) {
         if (root == nullptr) return root;
 
         if (key < root->key)
@@ -165,7 +165,7 @@ private:
         return root;
     }
 
-    // In-order traversal
+//    // In-order traversal
     void inorder(AVLNode* root) {
         if (root != nullptr) {
             inorder(root->left);
@@ -200,19 +200,20 @@ public:
         destroy(root);
     }
 
-    template <typename T>
-    void insert(int key) {
+    void insert(T key) {
         root = insert(root, key);
     }
-    template <typename T>
-    void remove(int key) {
+    void remove(T key) {
         root = deleteNode(root, key);
     }
-    template <typename T>
-    void display() {
+
+    void display() 
+    {
         inorder(root);
         std::cout << std::endl;
     }
-    template <typename T>
-    bool contains(T key) const { return containsNode(root, key); }
+
+    bool contains(T key) const { return contains(root, key); }
 };
+
+
