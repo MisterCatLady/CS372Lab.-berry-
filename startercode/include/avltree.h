@@ -2,10 +2,10 @@
 //// Author: Dr Adam Lewis - edited by Lindsey Berry
 //// Purpose:
 ////Grab the AVL tree class from Your Glorious Instructor’s GitHub repo and add it into your repository.
-//#pragma once
-//#include <iostream>
-//#include <algorithm>
-//
+#pragma once
+#include <iostream>
+#include <algorithm>
+
 template <typename T>
 class AVLTree {
 private:
