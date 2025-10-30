@@ -4,8 +4,9 @@
 #include <random>
 #include <chrono>
 #include <utility>
-#include "avltree.h"
-#include "Tree.hpp"
+#include "C:\Users\Lindsey\Desktop\CS318\CS372Lab.-berry-\startercode\include\avltree.h"
+#include "C:\Users\Lindsey\Desktop\CS318\CS372Lab.-berry-\startercode\include\Tree.hpp"
+#include <iomanip>
 //Write a function that, given an integer as an argument,
 //will return a reference to a Tree containing that many randomly generated integers.
 std::pair<Tree<int>, std::vector<int>> makeRandomTree(int n, int minVal = 0, int maxVal = 1000000) 
@@ -74,28 +75,33 @@ std::pair<double, double> measureSearchTimes(const Tree<int>& bst, const AVLTree
 //Now using that function from the previous step, write a driver program that will report the average search times 
 // for searching thru a BST and AVL tree with 100, 500, 1000, 2500, 5000, and 10000 elements.
 int main() {
-    std::vector<int> sizes = { 100, 500, 1000};
+    std::vector<int> sizes = { 100, 500, 1000, 2500, 5000, 10000 };
 
-    std::cout << "Size\tBST (us)\tAVL (us)\n";
-    std::cout << "----------------------------------\n";
+    std::cout << "\n=================== SEARCH TIME COMPARISON ===================\n";
+    std::cout << std::left << std::setw(10) << "Size"
+        << std::right << std::setw(15) << "BST Avg"
+        << std::right << std::setw(15) << "AVL Avg\n";
+    std::cout << "--------------------------------------------------------------\n";
 
-    for (int n : sizes) {
-        std::cout << "Creating BST with " << n << " elements..." << std::flush;
+
+    for (int n : sizes) 
+    {
+        std::cout << "\n[Building trees with " << n << " elements...]\n" << std::flush;
+
         auto result = makeRandomTree(n);
         Tree<int>& bst = result.first;
-
-        std::cout << " done.\nBuilding AVL tree..." << std::flush;
         AVLTree<int> avl = buildAVLFromTree(bst);
-        std::cout << " done.\nMeasuring search times..." << std::flush;
 
         auto averages = measureSearchTimes(bst, avl, 100);
         double bstAvg = averages.first;
         double avlAvg = averages.second;
 
-        std::cout << " done.\n";
-
-        std::cout << n << "\t" << bstAvg << "\t\t" << avlAvg << "\n";
+        std::cout << std::fixed << std::setprecision(3);
+        std::cout << std::left << std::setw(10) << n
+            << std::right << std::setw(15) << bstAvg
+            << std::right << std::setw(15) << avlAvg << std::endl;
     }
-
+    std::cout << "==============================================================\n";
+    std::cout << "\nPress Enter to exit...";
     return 0;
 }

@@ -123,10 +123,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\include\avltree.h" />
-    <ClInclude Include="..\..\..\include\Tree.hpp" />
-  </ItemGroup>
-  <ItemGroup>
     <ClCompile Include="Assignment07.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

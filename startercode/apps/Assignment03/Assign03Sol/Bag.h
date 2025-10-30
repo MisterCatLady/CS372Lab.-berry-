@@ -38,6 +38,6 @@ public:
         return bagCount;
     }
 private:
-    std::list<Thing> bagContents;
+    std::List<Thing> bagContents;
     int bagSize = 0;
 };

@@ -1,7 +1,7 @@
 #include "gtest/gtest.h"
 #include <iostream>
 #include <fstream>
-#include "C:\Users\Lindsey\Desktop\CS318\CS372Lab.-berry-\startercode\include\List.h"
+#include "List.h"
 
 struct Employee
 {
@@ -103,7 +103,7 @@ TEST_F(ListTest, IteratorTestPushOnNotEmpty)
 //Test: Test Traverse
 //Precondition: Have items in a list
 //Postcondition: No changes are made to the list, output seen
-TEST_F(ListTest, IteratorTestPushOnNotEmpty)
+TEST_F(ListTest, TestTraverse)
 {
 	EXPECT_FALSE(employeeList2.empty());
 	std::cout << std::endl;
