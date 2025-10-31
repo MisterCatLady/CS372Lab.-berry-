@@ -8,6 +8,7 @@
 //compiler doesn't like file name for some reason
 //#include "C:/Users/Lindsey/Desktop/CS318/CS372Lab.-berry-/startercode/include/Tree.hpp"
 #include "Tree.hpp"
+//Chatgpt helped me write this code
 template <typename Key, typename Value>
 class Dictionary 
 {
