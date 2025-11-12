@@ -22,6 +22,7 @@ template <class N>
 class WeightedAdjMatrixGraph : public Graph<N> {
 private:
     using Edge = tuple<N, N, int>;
+    using EdgeList = list<Edge>;
     std::vector<N> nodes;
     const static int maxSize = 10;
     short adjMatrix[maxSize][maxSize] = {};
