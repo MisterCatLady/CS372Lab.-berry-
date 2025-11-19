@@ -84,14 +84,13 @@ public:
         return (match);
     }
 
-    vector<N>& neighbors(N x) {
-        vector<N>* nodes = new vector<N>();
+    std::vector<N> neighbors(N x) override {
+        std::vector<N> nodes;
         EdgeList edges = vertexMap.at(x);
-        for (typename EdgeList::const_iterator it = edges.begin(); it != edges.end(); it++) {
-            Edge e = *it;
-            nodes->push_back(std::get<1>(e));
+        for (const auto& e : edges) {
+            nodes.push_back(std::get<1>(e));
         }
-        return *nodes;
+        return nodes;
     }
 
     void addNode(N node) {
