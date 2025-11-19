@@ -7,7 +7,6 @@ using std::vector;
 
 const int INF = std::numeric_limits<int>::max() / 4;  
 
-// Floyd–Warshall: computes all-pairs shortest paths
 vector<vector<int>> floyd(const vector<vector<int>>& W)
 {
     int n = W.size();
